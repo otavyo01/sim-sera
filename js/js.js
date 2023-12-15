@@ -3,28 +3,36 @@ document.addEventListener('DOMContentLoaded', function () {
     const meuBotao = document.getElementById('meuBotao');
     const texto = document.querySelector('.textomeio');
 
-    // Variáveis para contar cliques e controlar o movimento
-    let contadorCliques = 0;
-
     // Adicione um ouvinte de eventos de clique ao botão
     meuBotao.addEventListener('click', function () {
-        // Aumenta o contador de cliques
-        contadorCliques++;
+        // Move o botão para uma posição aleatória na tela a cada clique
+        moverBotaoAleatoriamente();
 
-        // Ativa o movimento do botão a cada clique
-        animarBotao();
-
-        // Verifica se o botão foi clicado mais de 5 vezes
-        if (contadorCliques >= 5) {
-            // Mostra o texto após 5 cliques
+        // Verifica se o botão foi clicado 5 vezes
+        if (contagemCliques() >= 5) {
+            // Mostra o texto e esconde o botão após 5 cliques
             mostrarTexto();
+            esconderBotao();
         }
     });
 
-    // Função para animar o botão
-    function animarBotao() {
-        // Move o botão para a direita
-        meuBotao.style.transform = `translateX(${contadorCliques * 50}px)`;
+    // Função para mover o botão para uma posição aleatória
+    function moverBotaoAleatoriamente() {
+        const novaPosicaoX = Math.random() * (window.innerWidth - 100);
+        const novaPosicaoY = Math.random() * (window.innerHeight - 100);
+
+        meuBotao.style.transform = `translate(${novaPosicaoX}px, ${novaPosicaoY}px)`;
+    }
+
+    // Função para contar os cliques
+    function contagemCliques() {
+        // Adicione a lógica necessária para rastrear a contagem de cliques
+        // Aqui estou usando uma variável global como exemplo
+        if (!window.contadorCliques) {
+            window.contadorCliques = 0;
+        }
+        window.contadorCliques++;
+        return window.contadorCliques;
     }
 
     // Função para mostrar o texto
@@ -38,5 +46,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Adiciona o novo texto ao documento
         document.body.appendChild(novoTexto);
+    }
+
+    // Função para esconder o botão
+    function esconderBotao() {
+        meuBotao.style.display = 'none';
     }
 });
