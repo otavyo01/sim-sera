@@ -5,40 +5,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Variáveis para contar cliques e controlar o movimento
     let contadorCliques = 0;
-    let movimentoAtivado = false;
 
     // Adicione um ouvinte de eventos de clique ao botão
     meuBotao.addEventListener('click', function () {
         // Aumenta o contador de cliques
         contadorCliques++;
 
-        // Ativa o movimento do botão após 5 cliques
-        if (contadorCliques === 5 && !movimentoAtivado) {
-            movimentoAtivado = true;
-            animarBotao();
-        }
+        // Ativa o movimento do botão a cada clique
+        animarBotao();
 
         // Verifica se o botão foi clicado mais de 5 vezes
-        if (contadorCliques > 5) {
-            // Reinicia o contador de cliques
-            contadorCliques = 0;
-            // Desativa o movimento
-            movimentoAtivado = false;
+        if (contadorCliques >= 5) {
+            // Mostra o texto após 5 cliques
+            mostrarTexto();
         }
     });
 
     // Função para animar o botão
     function animarBotao() {
         // Move o botão para a direita
-        meuBotao.style.transform = 'translateX(300px)';
+        meuBotao.style.transform = `translateX(${contadorCliques * 50}px)`;
+    }
 
-        // Move o texto para a esquerda
-        texto.style.transform = 'translateX(-300px)';
+    // Função para mostrar o texto
+    function mostrarTexto() {
+        // Cria um novo elemento de texto
+        const novoTexto = document.createElement('p');
+        novoTexto.innerText = 'Texto aparecendo lentamente';
 
-        // Após 1 segundo, reverte a posição do botão e do texto
-        setTimeout(() => {
-            meuBotao.style.transform = 'translateX(0)';
-            texto.style.transform = 'translateX(0)';
-        }, 1000);
+        // Adiciona uma classe ao novo texto para estilização
+        novoTexto.classList.add('aparecendo');
+
+        // Adiciona o novo texto ao documento
+        document.body.appendChild(novoTexto);
     }
 });
